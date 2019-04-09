@@ -11,16 +11,10 @@
 |
 */
 
-use App\Task;
-use Illuminate\Http\Request;
 
 Route::get('/task', 'TaskController@index');
 Route::post('/task', 'TaskController@store');
 Route::post('/task/get_data', 'TaskController@getData');
 Route::get('/task/edit/{id}', 'TaskController@edit');
-Route::delete('/task/{task}', function (Task $task) {
-    //
-    $task->delete();
-
-    return redirect('/');
-});
+Route::put('/task', 'TaskController@update');
+Route::delete('/task/{id}','TaskController@delete');

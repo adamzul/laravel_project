@@ -10,6 +10,7 @@ use App\Task;
 class TaskController extends Controller
 {
 	public $fieldTable = ['id', 'name'];
+	public $fieldInput = ['name'];
     public function index(){
 		return view('tasks');
 	}
@@ -48,9 +49,23 @@ class TaskController extends Controller
 		}
 		return json_encode(['status' => true, 'data' => $data]);
 	}
-	public function edit(Request $request){
-		$id = $request->input('id');
+	public function edit($id){
+		// $id = $request->input('id');
+		// var_dump($id);
 		$task = Task::where('id', $id)->first();
-		return json_encode(value)
+		return json_encode($task);
+	}
+
+	public function update(Request $request){
+		$task = Task::find($request->id);
+	    $task->name = $request->name;
+	    $task->save();
+	    return json_encode(['status' => true]);
+	}
+
+	public function delete($id){
+		$task = Task::find($id);
+	    $task->delete();
+	    return json_encode(['status' => true]);
 	}
 }

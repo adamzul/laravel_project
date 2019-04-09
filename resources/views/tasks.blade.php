@@ -40,14 +40,8 @@
 					</div>
 					<div class="x_content">
 						<br />
-
-
-
 					</div>
 					<div class="container">
-
-
-
 						<br />
 						<button class="btn btn-success" onclick="add_data()"><i class="glyphicon glyphicon-plus"></i> Tambah Arah</button>
 						<button class="btn btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
@@ -63,9 +57,7 @@
 							</thead>
 							<tbody>
 							</tbody>
-
 							<tfoot>
-
 							</tfoot>
 						</table>
 					</div>
@@ -74,8 +66,6 @@
 		</div>
 	</div>
 </div>
-
-
 
 <!-- Bootstrap modal -->
 <div class="modal fade" id="modal_form" role="dialog">
@@ -105,10 +95,7 @@
 @endsection
 
 @section('customjs')
-
-
 <script type="text/javascript">
-
 	var save_method; //for save method string
 	var table;
 
@@ -116,12 +103,10 @@
 
 		//datatables
 		table = $('#table').DataTable({
-
 			"processing": true, //Feature control the processing indicator.
 			"serverSide": true, //Feature control DataTables' server-side processing mode.
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
-			
 			"ajax": {
 				"headers": {
 					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -139,7 +124,6 @@
 		});
 	});
 		//set input/textarea/select event when change value, remove class error and remove text help block
-
 	function add_data()
 	{
 		save_method = 'add';
@@ -161,7 +145,7 @@
 
 		//Ajax Load data from ajax
 		$.ajax({
-			url : "" + id,
+			url : "{{ url('/task/edit') }}" + "/" + id,
 			type: "GET",
 			dataType: "JSON",
 			success: function(data)
@@ -172,7 +156,6 @@
 				})
 				$('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 				$('.modal-title').text('Edit Arah'); // Set title to Bootstrap modal title
-
 			},
 			error: function (data)
 			{
@@ -192,13 +175,16 @@
 		$('#btnSave').text('saving...'); //change button text
 		$('#btnSave').attr('disabled',true); //set button disable
 		var url;
+		var method;
 
 		if(save_method == 'add') {
-			url = "";
+			url = "{{ url('/task') }}";
+			method = "POST";
 		} else {
-			url = "";
+			url = "{{ url('/task') }}";
+			method = "PUT";
 		}
-		url = "{{ url('/task') }}";
+		
 		// e.preventDefault();
 		$.ajaxSetup({
 			headers: {
@@ -209,12 +195,11 @@
 		// ajax adding data to database
 		$.ajax({
 			url : url,
-			type: "POST",
+			type: method,
 			data: $('#form').serialize(),
 			dataType: "JSON",
 			success: function(data)
 			{
-
 				if(data.status) //if success close modal and reload ajax table
 				{
 					$('#modal_form').modal('hide');
@@ -246,14 +231,19 @@
 		});
 	}
 
-	function delete_person(id)
+	function delete_data(id)
 	{
 		if(confirm('Are you sure delete this data?'))
 		{
 			// ajax delete data to database
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
 			$.ajax({
-				url : "/"+id,
-				type: "POST",
+				url : "{{ url('/task') }}"+ "/" + id,
+				type: "DELETE",
 				dataType: "JSON",
 				success: function(data)
 				{
