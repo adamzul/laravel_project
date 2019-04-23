@@ -18,3 +18,6 @@ Route::post('/task/get_data', 'TaskController@getData');
 Route::get('/task/edit/{id}', 'TaskController@edit');
 Route::put('/task', 'TaskController@update');
 Route::delete('/task/{id}','TaskController@delete');
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
