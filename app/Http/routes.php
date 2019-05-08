@@ -11,13 +11,34 @@
 |
 */
 
+Route::group(['prefix' => 'task'], function () {
+    
+	Route::get('/', 'TaskController@index');
+	Route::post('/', 'TaskController@store');
+	Route::post('/get_data', 'TaskController@getData');
+	Route::get('/edit/{id}', 'TaskController@edit');
+	Route::put('/', 'TaskController@update');
+	Route::delete('/{id}','TaskController@delete');
+});
 
-Route::get('/task', 'TaskController@index');
-Route::post('/task', 'TaskController@store');
-Route::post('/task/get_data', 'TaskController@getData');
-Route::get('/task/edit/{id}', 'TaskController@edit');
-Route::put('/task', 'TaskController@update');
-Route::delete('/task/{id}','TaskController@delete');
+Route::group(['prefix' => 'pegawai'], function () {
+	Route::get('/', 'PegawaiController@index');
+	Route::post('/', 'PegawaiController@store');
+	Route::post('/get_data', 'PegawaiController@getData');
+	Route::get('/edit/{id}', 'PegawaiController@edit');
+	Route::put('/', 'PegawaiController@update');
+	Route::delete('/{id}','PegawaiController@delete');
+});
+
+Route::group(['prefix' => 'divisi'], function () {
+	Route::get('/', 'DivisiController@index');
+	Route::post('/', 'DivisiController@store');
+	Route::post('/get_data', 'DivisiController@getData');
+	Route::get('/edit/{id}', 'DivisiController@edit');
+	Route::put('/', 'DivisiController@update');
+	Route::delete('/{id}','DivisiController@delete');
+});
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
