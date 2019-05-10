@@ -6,15 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests;
 use App\Models\Pegawai as MainModel;
+use App\Models\Divisi;
+use App\Models\Jabatan;
+
+use App\Services\PegawaiService as MainService;
 
 class PegawaiController extends Controller
 {
-	public $fieldTable = ['id', 'nama'];
-	public $fieldInput = ['nama' => 'required|max:30'];
+	public $fieldTable = ['id', 'nama', 'divisi', 'telepon', 'alamat'];
+	public $fieldInput = ['nama' => 'required|max:30', 'divisi' => 'required', 'jabatan' => 'required', 'telepon' => 'required', 'alamat' => 'required'];
 	public $mainView = 'pegawai';
 	public $mainUrl = 'pegawai';
+	public $title = 'Pegawai';
     public function index(){
-		return view($this->mainView, ["mainUrl" => $this->mainUrl]);
+    	$divisiAll = Divisi::all();
+    	$jabatanAll = Jabatan::all();
+		return view($this->mainView, ["mainUrl" => $this->mainUrl, "title" => $this->title, "divisiAll" => $divisiAll, "jabatanAll" => $jabatanAll]);
 	}
 
 	public function store(Request $request) {
@@ -36,21 +43,13 @@ class PegawaiController extends Controller
 	}
 
 	public function getData(Request $request){
-		$dataTempAll = MainModel::skip($request->start)->take($request->length)->get();
-		$dataTempAll = MainModel::query();
-		if($request->search['value']){
-			foreach($this->fieldTable as $field){
-			    $dataTempAll->orWhere($field, 'LIKE', '%'.$request->search['value'].'%');
-			}
-		}
-		$dataTempAll = $dataTempAll->skip($request->start)->take($request->length)->get();
+		
+		$dataTempAll = MainModel::init()->getData($request);
 		$dataCount = MainModel::all()->count();
 		$data = [];
 		foreach ($dataTempAll as $dataTemp) {
-			# code...
 			$row = [];
 			foreach ($this->fieldTable as $key => $value) {
-				# code...
 				$row[] = $dataTemp->$value;
 			}
 			$row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_data('."'".$dataTemp->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>

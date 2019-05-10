@@ -1,28 +1,25 @@
 <?php
 
-namespace App\Models;
+namespace App\Services;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests;
 
 use DB;
 
-
-class Pegawai extends Template1Model
+class PegawaiService 
 {
-    //
-	protected $table = 'pegawai';
-
-	public $fieldTable = ["a.id", "a.nama", "b.nama", "a.telepon", "a.alamat"];
+	public  $table = 'pegawai';
+	public $fieldTable = ['a.id', 'a.nama', 'b.nama'];
 
 	public static function init(){
 		return new self();
 	}
 
-	public function getData(Request $request){
+	public  function getData(Request $request){
 		$dataTempAll = DB::table($this->table." as a")
-		->select(["a.id", "a.nama", "b.nama as divisi", "a.telepon", "a.alamat"])
+		->select(["a.id", "a.nama", "b.nama as divisi"])
 		->join('divisi as b', 'a.divisi', '=', 'b.id');
 		if($request->search['value']){
 			foreach($this->fieldTable as $field){
@@ -37,4 +34,5 @@ class Pegawai extends Template1Model
 		
 		return $dataTempAll;
 	}
+	
 }

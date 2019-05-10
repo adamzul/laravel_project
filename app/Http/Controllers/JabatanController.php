@@ -5,16 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests;
-use App\Models\Divisi as MainModel;
-use App\Services\DivisiService as MainService;
+use App\Models\Jabatan as MainModel;
 
-class DivisiController extends Controller
+class JabatanController extends Controller
 {
 	public $fieldTable = ['id', 'nama'];
 	public $fieldInput = ['nama' => 'required|max:30'];
-	public $mainView = 'divisi';
-	public $mainUrl = 'divisi';
-	public $title = 'Divisi';
+	public $mainView = 'jabatan';
+	public $mainUrl = 'jabatan';
+	public $title = 'Jabatan';
     public function index(){
 		return view($this->mainView, ["mainUrl" => $this->mainUrl, "title" => $this->title]);
 	}

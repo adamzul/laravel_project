@@ -39,6 +39,15 @@ Route::group(['prefix' => 'divisi'], function () {
 	Route::delete('/{id}','DivisiController@delete');
 });
 
+Route::group(['prefix' => 'jabatan'], function () {
+	Route::get('/', 'JabatanController@index');
+	Route::post('/', 'JabatanController@store');
+	Route::post('/get_data', 'JabatanController@getData');
+	Route::get('/edit/{id}', 'JabatanController@edit');
+	Route::put('/', 'JabatanController@update');
+	Route::delete('/{id}','JabatanController@delete');
+});
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');

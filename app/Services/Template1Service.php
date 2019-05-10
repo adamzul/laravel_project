@@ -1,29 +1,25 @@
 <?php
 
-namespace App\Models;
+namespace App\Services;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests;
 
 use DB;
 
-
-class Pegawai extends Template1Model
+class Template1Service 
 {
-    //
-	protected $table = 'pegawai';
-
-	public $fieldTable = ["a.id", "a.nama", "b.nama", "a.telepon", "a.alamat"];
+	public $table = '';
+	public $fieldTable = [];
 
 	public static function init(){
-		return new self();
+		return new DivisiService();
 	}
 
 	public function getData(Request $request){
 		$dataTempAll = DB::table($this->table." as a")
-		->select(["a.id", "a.nama", "b.nama as divisi", "a.telepon", "a.alamat"])
-		->join('divisi as b', 'a.divisi', '=', 'b.id');
+		->select($this->fieldTable);
 		if($request->search['value']){
 			foreach($this->fieldTable as $field){
 			    $dataTempAll->orWhere($field, 'LIKE', '%'.$request->search['value'].'%');

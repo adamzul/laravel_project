@@ -20,7 +20,7 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Pegawai </h2>
+						<h2>{{$title}} </h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 							</li>
@@ -43,7 +43,7 @@
 					</div>
 					<div class="container">
 						<br />
-						<button class="btn btn-success" onclick="add_data()"><i class="glyphicon glyphicon-plus"></i> Tambah Pegawai</button>
+						<button class="btn btn-success" onclick="add_data()"><i class="glyphicon glyphicon-plus"></i> Tambah {{$title}}</button>
 						<button class="btn btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
 						<br />
 						<br />
@@ -52,6 +52,9 @@
 							<tr>
 								<th>ID</th>
 								<th>nama</th>
+								<th>divisi</th>
+								<th>telepon</th>
+								<th>alamat</th>
 								<th style="width:125px;">Action</th>
 							</tr>
 							</thead>
@@ -81,6 +84,34 @@
 					<div class="form-group">
 						<label for="nama">nama</label>
 						<input type="text" class="form-control"   name="nama" placeholder="nama" >
+						<span class="help-block"></span>
+					</div>
+					<div class="form-group">
+						<label for="divisi">divisi</label>
+						<select class="form-control select2_single" name="divisi"  >
+							@foreach($divisiAll as $divisi)
+							<option value="{{ $divisi->id }}">{{$divisi->nama}}</option>
+							@endforeach
+						</select>
+						<span class="help-block"></span>
+					</div>
+					<div class="form-group">
+						<label for="jabatan">jabatan</label>
+						<select class="form-control select2_single" name="jabatan"  >
+							@foreach($jabatanAll as $jabatan)
+							<option value="{{ $divisi->id }}">{{$jabatan->nama}}</option>
+							@endforeach
+						</select>
+						<span class="help-block"></span>
+					</div>
+					<div class="form-group">
+						<label for="telepon">telepon</label>
+						<input type="text" class="form-control"   name="telepon" placeholder="telepon" >
+						<span class="help-block"></span>
+					</div>
+					<div class="form-group">
+						<label for="alamat">alamat</label>
+						<textarea class="form-control"   name="alamat" placeholder="alamat" ></textarea>
 						<span class="help-block"></span>
 					</div>
 				</form>
@@ -133,7 +164,7 @@
 		$('#form-control-asal').show();
 		$('#form-control-tujuan').show();
 		$('#modal_form').modal('show'); // show bootstrap modal
-		$('.modal-title').text('Add Pegawai'); // Set Title to Bootstrap modal title
+		$('.modal-title').text('Add {{$title}}'); // Set Title to Bootstrap modal title
 	}
 
 	function edit_data(id)
@@ -155,7 +186,7 @@
 					$('[name="'+index+'"]').val(value);
 				})
 				$('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-				$('.modal-title').text('Edit Pegawai'); // Set title to Bootstrap modal title
+				$('.modal-title').text('Edit {{$title}}'); // Set title to Bootstrap modal title
 			},
 			error: function (data)
 			{
@@ -245,7 +276,7 @@
 				}
 			});
 			$.ajax({
-				url : "{{ url('/pegawai') }}"+ "/" + id,
+				url : "{{ url($mainUrl) }}"+ "/" + id,
 				type: "DELETE",
 				dataType: "JSON",
 				success: function(data)
