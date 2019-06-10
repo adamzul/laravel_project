@@ -21,7 +21,16 @@ Route::group(['prefix' => 'task'], function () {
 	Route::delete('/{id}','TaskController@delete');
 });
 
-Route::group(['prefix' => 'pegawai'], function () {
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+	Route::get('/', 'UserController@index');
+	Route::post('/', 'UserController@store');
+	Route::post('/get_data', 'UserController@getData');
+	Route::get('/edit/{id}', 'UserController@edit');
+	Route::put('/', 'UserController@update');
+	Route::delete('/{id}','UserController@delete');
+});
+
+Route::group(['prefix' => 'pegawai', 'middleware' => 'auth'], function () {
 	Route::get('/', 'PegawaiController@index');
 	Route::post('/', 'PegawaiController@store');
 	Route::post('/get_data', 'PegawaiController@getData');
@@ -30,7 +39,7 @@ Route::group(['prefix' => 'pegawai'], function () {
 	Route::delete('/{id}','PegawaiController@delete');
 });
 
-Route::group(['prefix' => 'divisi'], function () {
+Route::group(['prefix' => 'divisi', 'middleware' => 'auth'], function () {
 	Route::get('/', 'DivisiController@index');
 	Route::post('/', 'DivisiController@store');
 	Route::post('/get_data', 'DivisiController@getData');
@@ -39,7 +48,7 @@ Route::group(['prefix' => 'divisi'], function () {
 	Route::delete('/{id}','DivisiController@delete');
 });
 
-Route::group(['prefix' => 'jabatan'], function () {
+Route::group(['prefix' => 'jabatan', 'middleware' => 'auth'], function () {
 	Route::get('/', 'JabatanController@index');
 	Route::post('/', 'JabatanController@store');
 	Route::post('/get_data', 'JabatanController@getData');
@@ -51,3 +60,7 @@ Route::group(['prefix' => 'jabatan'], function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/', function(){
+	return redirect('/pegawai');
+});

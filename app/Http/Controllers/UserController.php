@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use App\Http\Requests;
-use App\Models\Pegawai as MainModel;
+use App\User as MainModel;
 use App\Models\Divisi;
 use App\Models\Jabatan;
 
+use Illuminate\Hashing\BcryptHasher;
+
 use App\Services\PegawaiService as MainService;
 
-class PegawaiController extends Controller
+class UserController extends Controller
 {
-	public $fieldTable = ['id', 'nama', 'divisi', 'telepon', 'alamat', "atasan", 'tanggal_lahir', 'tanggal_masuk', 'tanggal_keluar'];
-	public $fieldInput = ['nama' => 'required|max:30', 'divisi' => 'required', 'jabatan' => 'required', 'telepon' => 'required', 'alamat' => 'required', 'tanggal_lahir' => 'required', 'tanggal_masuk' => 'required'];
-	public $mainView = 'pegawai';
-	public $mainUrl = 'pegawai';
-	public $title = 'Pegawai';
+	public $fieldTable = ['id', 'name', 'email'];
+	public $fieldInput = ['name' => 'required|max:30', 'email' => 'required', 'password' => 'required'];
+	public $mainView = 'user';
+	public $mainUrl = 'user';
+	public $title = 'user';
 
     public function index(){
-    	$divisiAll = Divisi::all();
-    	$jabatanAll = Jabatan::all();
-    	$pegawaiAll = MainModel::all();
     	$user = \Auth::user();
-		return view($this->mainView, ["mainUrl" => $this->mainUrl, "title" => $this->title, "divisiAll" => $divisiAll, "jabatanAll" => $jabatanAll, "pegawaiAll" => $pegawaiAll]);
+		return view($this->mainView, ["mainUrl" => $this->mainUrl, "title" => $this->title]);
 	}
 
 	public function store(Request $request) {
@@ -32,16 +32,19 @@ class PegawaiController extends Controller
 
 	    if ($validator->fails()) {
 	    	return 0;
-	        // return redirect('/')
-	        //     ->withInput()
-	        //     ->withErrors($validator);
 	    }
 	    $newRecord = new MainModel;
 	    foreach ($this->fieldInput as $key => $value) {
 	    	$newRecord->$key = $request->$key;
 
 	    }
-	    $newRecord->save();
+	    $hasher = new BcryptHasher();
+	    // $newRecord->password = $hasher->make($newRecord->password);
+	    $newRecord->forceFill([
+                'password' => bcrypt($newRecord->password),
+               'remember_token' => Str::random(60),
+            ])->save();
+	    // $newRecord->save();
 
 	    return json_encode(['status' => true]);
 	}
@@ -65,6 +68,7 @@ class PegawaiController extends Controller
 	}
 	public function edit($id){
 		$record = MainModel::where('id', $id)->first();
+		$record->password = "";
 		return json_encode($record);
 	}
 
@@ -75,9 +79,15 @@ class PegawaiController extends Controller
 	    	return 0;
 	    }
 		$record = MainModel::find($request->id);
-	    foreach ($this->fieldInput as $key => $value) {
-	    	$record->$key = $request->$key;
-	    }
+
+    	$record->nama = $request->nama;
+    	$record->email = $request->email;
+    	if($request->password != ""){
+    		$record->forceFill([
+            	'password' => bcrypt($record->password),
+            	'remember_token' => Str::random(60),
+            ]);
+    	}
 	    $record->save();
 	    return json_encode(['status' => true]);
 	}

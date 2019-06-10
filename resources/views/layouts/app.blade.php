@@ -397,13 +397,13 @@
             });
 
             
-                $('.datetimepicker').datetimepicker({
-                  format: 'YYYY-MM-DD HH:mm:00',
-                });
+                // $('.datetimepicker').datetimepicker({
+                //   format: 'YYYY-MM-DD HH:mm:00',
+                // });
 
-                $('.datetimepicker2').datetimepicker({
-                  format: 'MM/DD/YYYY HH:mm',
-                });
+                // $('.datetimepicker2').datetimepicker({
+                //   format: 'MM/DD/YYYY HH:mm',
+                // });
           $("input").on('change', function(){
               $(this).parent().removeClass('has-error');
               $(this).next().closest('div').find('.help-block').empty();

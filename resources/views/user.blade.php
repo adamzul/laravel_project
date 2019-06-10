@@ -52,13 +52,7 @@
 							<tr>
 								<th>ID</th>
 								<th>nama</th>
-								<th>divisi</th>
-								<th>telepon</th>
-								<th>alamat</th>
-								<th>atasan</th>
-								<th>tanggal lahir</th>
-								<th>tanggal masuk</th>
-								<th>tanggal keluar</th>
+								<th>email</th>
 								<th style="width:125px;">Action</th>
 							</tr>
 							</thead>
@@ -86,60 +80,20 @@
 				<form action="#" id="form" class="form-horizontal">
 					<input type="hidden" value="" name="id"/>
 					<div class="form-group">
-						<label for="nama">nama</label>
-						<input type="text" class="form-control"   name="nama" placeholder="nama" >
+						<label for="name">name</label>
+						<input type="text" class="form-control"   name="name" placeholder="name" >
 						<span class="help-block"></span>
 					</div>
+					
 					<div class="form-group">
-						<label for="divisi">divisi</label>
-						<select class="form-control select2_single" name="divisi"  >
-							@foreach($divisiAll as $divisi)
-							<option value="{{ $divisi->id }}">{{$divisi->nama}}</option>
-							@endforeach
-						</select>
+						<label for="email">email</label>
+						<input type="email" class="form-control"   name="email" placeholder="email" >
 						<span class="help-block"></span>
 					</div>
+					
 					<div class="form-group">
-						<label for="jabatan">jabatan</label>
-						<select class="form-control select2_single" name="jabatan"  >
-							@foreach($jabatanAll as $jabatan)
-							<option value="{{ $divisi->id }}">{{$jabatan->nama}}</option>
-							@endforeach
-						</select>
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group">
-						<label for="telepon">telepon</label>
-						<input type="text" class="form-control"   name="telepon" placeholder="telepon" >
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group">
-						<label for="alamat">alamat</label>
-						<textarea class="form-control"   name="alamat" placeholder="alamat" ></textarea>
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group">
-						<label for="tanggal_masuk">tanggal lahir</label>
-						<input type="text" class="form-control datepicker"   name="tanggal_lahir" placeholder="tanggal lahir" >
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group">
-						<label for="tanggal_masuk">tanggal masuk</label>
-						<input type="text" class="form-control datepicker"   name="tanggal_masuk" placeholder="tanggal masuk" >
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group">
-						<label for="atasan">atasan</label>
-						<select class="form-control select2_single" name="atasan"  >
-							@foreach($pegawaiAll as $atasan)
-							<option value="{{ $divisi->id }}">{{$atasan->nama}}</option>
-							@endforeach
-						</select>
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group">
-						<label for="tanggal_keluar">tanggal keluar</label>
-						<input type="text" class="form-control datepicker"   name="tanggal_keluar" placeholder="tanggal keluar" >
+						<label for="password">password</label>
+						<input type="password" class="form-control "   name="password" placeholder="password" >
 						<span class="help-block"></span>
 					</div>
 				</form>
