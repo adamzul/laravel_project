@@ -14,7 +14,7 @@ class Pegawai extends Template1Model
     //
 	protected $table = 'pegawai';
 
-	public $fieldTable = ["a.id", "a.nama", "b.nama", "a.telepon", "a.alamat", "a.tanggal_lahir", "a.tanggal_masuk", "a.tanggal_keluar", "a.atasan"];
+	public $fieldTable = ["a.id", "a.nama", "a.email", "b.nama", "a.telepon", "a.alamat", "a.tanggal_lahir", "a.tanggal_masuk", "a.tanggal_keluar", "a.atasan", "d.nama"];
 
 	public static function init(){
 		return new self();
@@ -22,9 +22,10 @@ class Pegawai extends Template1Model
 
 	public function getData(Request $request){
 		$dataTempAll = DB::table($this->table." as a")
-		->select(["a.id", "a.nama", "b.nama as divisi", "a.telepon", "a.alamat", "a.tanggal_lahir", "a.tanggal_masuk", "a.tanggal_keluar", "c.nama as atasan"])
+		->select(["a.id", "a.nama", "a.email", "b.nama as divisi", "a.telepon", "a.alamat", "a.tanggal_lahir", "a.tanggal_masuk", "a.tanggal_keluar", "c.nama as atasan", "d.nama as jabatan"])
 		->leftJoin('divisi as b', 'a.divisi', '=', 'b.id')
-		->leftJoin('pegawai as c', 'a.atasan', '=', 'c.id');
+		->leftJoin('pegawai as c', 'a.atasan', '=', 'c.id')
+		->leftJoin('jabatan as d', 'a.jabatan', '=', 'd.id');
 		if($request->search['value']){
 			foreach($this->fieldTable as $field){
 			    $dataTempAll->orWhere($field, 'LIKE', '%'.$request->search['value'].'%');

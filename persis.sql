@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2019 at 10:49 AM
+-- Generation Time: Jun 11, 2019 at 11:00 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 5.6.38
 
@@ -108,6 +108,9 @@ CREATE TABLE `password_resets` (
 CREATE TABLE `pegawai` (
   `id` int(10) UNSIGNED NOT NULL,
   `nama` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `divisi` int(11) NOT NULL,
   `jabatan` int(11) NOT NULL,
   `alamat` text COLLATE utf8_unicode_ci NOT NULL,
@@ -124,17 +127,17 @@ CREATE TABLE `pegawai` (
 -- Dumping data for table `pegawai`
 --
 
-INSERT INTO `pegawai` (`id`, `nama`, `divisi`, `jabatan`, `alamat`, `telepon`, `atasan`, `tanggal_lahir`, `tanggal_masuk`, `tanggal_keluar`, `created_at`, `updated_at`) VALUES
-(1, 'lq', 2, 3, 'jl eerere', '00989', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 03:32:17', '2019-06-10 04:17:57'),
-(2, 'adam4', 2, 0, 'jl perak 123', '2121212', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 03:38:19', '2019-05-10 08:27:57'),
-(3, 'ada2', 2, 2, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 03:38:42', '2019-05-08 04:40:18'),
-(4, 'a', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:10', '2019-05-07 04:20:10'),
-(5, 'a', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:12', '2019-05-07 04:20:12'),
-(6, 'a', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:15', '2019-05-07 04:20:15'),
-(7, 'a', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:18', '2019-05-07 04:20:18'),
-(8, 'a', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:23', '2019-05-07 04:20:23'),
-(9, 'a', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:25', '2019-05-07 04:20:25'),
-(12, 'w', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 08:07:42', '2019-05-07 08:07:42');
+INSERT INTO `pegawai` (`id`, `nama`, `email`, `password`, `remember_token`, `divisi`, `jabatan`, `alamat`, `telepon`, `atasan`, `tanggal_lahir`, `tanggal_masuk`, `tanggal_keluar`, `created_at`, `updated_at`) VALUES
+(1, 'lq', '', '', '', 3, 1, 'jl eerere', '00989', 3, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 03:32:17', '2019-06-11 04:45:59'),
+(2, 'adam', 'adam@gmail.com', '$2y$10$lVdTF6gT/BVXbsLmSknqV.b9DHulFq8JiQDMFDcioqcyUkowBjM4W', 'x8gK1sAuzUTk7FdC2pba6wjO3hkvHGhXuu1Ja7asgDnwH8REXzpB1weqIaWB', 2, 2, 'jl perak 123', '2121212', 2, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 03:38:19', '2019-06-11 08:40:48'),
+(3, 'ada2', '', '', '', 2, 3, 'asasasas', '21212121', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 03:38:42', '2019-06-11 04:24:43'),
+(4, 'aqqqqq', '', '', '', 2, 3, 'sss', 'sasas', 2, '2019-06-11', '2019-06-11', '0000-00-00', '2019-05-07 04:20:10', '2019-06-11 04:38:24'),
+(5, 'a', '', '', '', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:12', '2019-05-07 04:20:12'),
+(6, 'a', '', '', '', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:15', '2019-05-07 04:20:15'),
+(7, 'a', '', '', '', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:18', '2019-05-07 04:20:18'),
+(8, 'a', '', '', '', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:23', '2019-05-07 04:20:23'),
+(9, 'a', '', '', '', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 04:20:25', '2019-05-07 04:20:25'),
+(12, 'w', '', '', '', 0, 0, '', '', 0, '0000-00-00', '0000-00-00', '0000-00-00', '2019-05-07 08:07:42', '2019-05-07 08:07:42');
 
 -- --------------------------------------------------------
 
@@ -179,7 +182,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'adam', 'adam@gmail.com', '$2y$10$jZ/SDCCwnetZpZmLbIHexueoZe40/N6XogipXUacBbux.MoS/FUmK', 'htk9jEIK81L5n43XYt5NszxwFrcqmehn5R9GQAVpAcZvW2xNveifZ88HUPH4', '2019-06-10 01:59:58', '2019-06-10 07:52:21'),
+(2, 'adam', 'adam@gmail.com', '\r\n$2y$10$b9.dCdbkD1bUD5.xRRXGj.UddkpTFK1K31R.s6ZBODy1YPeOWNZlK', 'htk9jEIK81L5n43XYt5NszxwFrcqmehn5R9GQAVpAcZvW2xNveifZ88HUPH4', '2019-06-10 01:59:58', '2019-06-10 07:52:21'),
 (3, 'nana', 'nana@gmail.com', 'nananana', NULL, '2019-06-10 07:43:03', '2019-06-10 07:43:03'),
 (4, 'nini', 'nini@gmail.com', '$2y$10$Mma8QCBQSgov7hmuef5Iu.juH05bXgxpMzTsMl57AErt9LJr2OE52', 'c3jRB2aCCwvzxAAhuNjGcgKBUgDwNoufRhA3t1hFMNdHXWrFOGFHx17Tpxh6', '2019-06-10 07:51:40', '2019-06-10 07:52:45'),
 (5, 'nunu', 'nunu@gmail.com', '$2y$10$TsOim/HRGr9ei7qCGguBveTr.AxMK/XPIVSexbKST3ZXX/mqwT10u', 'PVLvM8V9oAVQdQfWwxKyN4Z2uMcirOp1a8ihjsrMkf7XV2M4ZgZm5JXkAzoa', '2019-06-10 08:05:44', '2019-06-10 08:05:44');

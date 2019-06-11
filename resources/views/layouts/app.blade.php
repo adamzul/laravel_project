@@ -83,14 +83,15 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-user"></i> Application Administrator <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li>tes</li>
+                        <li><a href="{{ url('/divisi') }}">Divisi</a> </li>
+                        <li><a href="{{ url('/jabatan') }}">Jabatan</a> </li>
                         
                     </ul>
                   </li>
 
                     <li><a><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li>tes</li>
+                        <li><a href="{{ url('/pegawai') }}">Pegawai</a> </li>
                         
                     </ul>
                   </li>

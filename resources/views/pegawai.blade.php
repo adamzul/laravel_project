@@ -52,7 +52,9 @@
 							<tr>
 								<th>ID</th>
 								<th>nama</th>
+								<th>email</th>
 								<th>divisi</th>
+								<th>jabatan</th>
 								<th>telepon</th>
 								<th>alamat</th>
 								<th>atasan</th>
@@ -91,6 +93,16 @@
 						<span class="help-block"></span>
 					</div>
 					<div class="form-group">
+						<label for="email">email</label>
+						<input type="text" class="form-control" name="email" placeholder="email" >
+						<span class="help-block"></span>
+					</div>
+					<div class="form-group">
+						<label for="password">password</label>
+						<input type="password" class="form-control" name="password" placeholder="password" >
+						<span class="help-block"></span>
+					</div>
+					<div class="form-group">
 						<label for="divisi">divisi</label>
 						<select class="form-control select2_single" name="divisi"  >
 							@foreach($divisiAll as $divisi)
@@ -103,7 +115,7 @@
 						<label for="jabatan">jabatan</label>
 						<select class="form-control select2_single" name="jabatan"  >
 							@foreach($jabatanAll as $jabatan)
-							<option value="{{ $divisi->id }}">{{$jabatan->nama}}</option>
+							<option value="{{ $jabatan->id }}">{{$jabatan->nama}}</option>
 							@endforeach
 						</select>
 						<span class="help-block"></span>
@@ -132,7 +144,7 @@
 						<label for="atasan">atasan</label>
 						<select class="form-control select2_single" name="atasan"  >
 							@foreach($pegawaiAll as $atasan)
-							<option value="{{ $divisi->id }}">{{$atasan->nama}}</option>
+							<option value="{{ $atasan->id }}">{{$atasan->nama}}</option>
 							@endforeach
 						</select>
 						<span class="help-block"></span>
@@ -212,7 +224,9 @@
 		$('#form')[0].reset(); // reset form on modals
 		$('.form-group').removeClass('has-error'); // clear error class
 		$('.help-block').empty(); // clear error string
-
+		$('[name="atasan"]').val(0).trigger('change');
+        $('[name="divisi"]').val(0).trigger('change');
+        $('[name="jabatan"]').val(0).trigger('change');
 		//Ajax Load data from ajax
 		$.ajax({
 			url : "{{ url($mainUrl.'/edit') }}" + "/" + id,
@@ -276,7 +290,6 @@
 			dataType: "JSON",
 			success: function(data)
 			{
-				console.log("masu")
 				if(data.status) //if success close modal and reload ajax table
 				{
 					$('#modal_form').modal('hide');
@@ -285,13 +298,18 @@
 				else
 				{
 					console.log(data);
-					if(data.inputerror != null) {
-						for (var i = 0; i < data.inputerror.length; i++) {
-							$('[name="' + data.inputerror[i] + '"]').parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-							$('[name="' + data.inputerror[i] + '"]').closest('div').find('.help-block').text(data.error_string[i]); //select span help-block class set text error string
-						}
+					if(data.status == false) {
+						// for (var i = 0; i < data.inputerror.length; i++) {
+						// 	$('[name="' + data.inputerror[i] + '"]').parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+						// 	$('[name="' + data.inputerror[i] + '"]').closest('div').find('.help-block').text(data.error_string[i]); //select span help-block class set text error string
+						// }
+						console.log(data)
+						for(var key in data.inputerror){
+							$('[name="'+key+'"]').parent().addClass('has-error');
+							$('[name="'+key+'"]').closest('div').find('.help-block').text(data.inputerror[key][0]);
+						};
 					}
-					if(data.massage != null){
+					else{
 						alert(data.massage);
 					}
 				}

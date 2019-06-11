@@ -202,24 +202,18 @@
 			dataType: "JSON",
 			success: function(data)
 			{
-				console.log("masu")
-				if(data.status) //if success close modal and reload ajax table
+				if(data.status == true) //if success close modal and reload ajax table
 				{
 					$('#modal_form').modal('hide');
 					reload_table();
 				}
 				else
 				{
-					console.log(data);
-					if(data.inputerror != null) {
-						for (var i = 0; i < data.inputerror.length; i++) {
-							$('[name="' + data.inputerror[i] + '"]').parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-							$('[name="' + data.inputerror[i] + '"]').closest('div').find('.help-block').text(data.error_string[i]); //select span help-block class set text error string
-						}
-					}
-					if(data.massage != null){
-						alert(data.massage);
-					}
+					console.log(data)
+					for(var key in data.inputerror){
+						$('[name="'+key+'"]').parent().addClass('has-error');
+						$('[name="'+key+'"]').closest('div').find('.help-block').text(data.inputerror[key][0]);
+					};
 				}
 				$('#btnSave').text('save'); //change button text
 				$('#btnSave').attr('disabled',false); //set button enable

@@ -22,9 +22,8 @@ class JabatanController extends Controller
 	    $validator = Validator::make($request->all(), $this->fieldInput);
 
 	    if ($validator->fails()) {
-	        return redirect('/')
-	            ->withInput()
-	            ->withErrors($validator);
+	    	$messages = $validator->messages();
+	    	return json_encode(['status' => false, 'inputerror' => $messages]) ;
 	    }
 	    $newRecord = new MainModel;
 	    foreach ($this->fieldInput as $key => $value) {
@@ -61,6 +60,12 @@ class JabatanController extends Controller
 	}
 
 	public function update(Request $request){
+	    $validator = Validator::make($request->all(), $this->fieldInput);
+		if ($validator->fails()) {
+	    	$messages = $validator->messages();
+	    	return json_encode(['status' => false, 'inputerror' => $messages]) ;
+	    }
+
 		$record = MainModel::find($request->id);
 	    foreach ($this->fieldInput as $key => $value) {
 	    	$record->$key = $request->$key;
